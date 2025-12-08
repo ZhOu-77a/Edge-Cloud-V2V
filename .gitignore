@@ -1,0 +1,16 @@
+# 忽略模型文件夹 (核心！绝对不能上传)
+models/
+videox_fun/models/*.safetensors
+videox_fun/models/*.bin
+
+# 忽略输出结果和素材
+output/
+asset/
+*.mp4
+
+# 忽略 Python 缓存和系统文件
+__pycache__/
+*.pyc
+.DS_Store
+.idea/
+.vscode/
