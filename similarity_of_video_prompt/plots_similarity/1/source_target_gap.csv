@@ -1,0 +1,31 @@
+video,prompt_id,prompt_name,difficulty_label,initial_clip_score
+scene_001_left-forward,1,Base Description,Easy,0.28772881627082825
+scene_001_left-forward,2,Weather: Rainy,Easy,0.2837319076061249
+scene_001_left-forward,3,Style: Cartoon,Medium,0.2720927298069
+scene_001_left-forward,4,Material: Lego,Hard,0.29426854848861694
+scene_001_left-forward,5,Env: Mars Red Planet,Extreme,0.2596747875213623
+scene_001_left-forward,6,Abstract: Thermal Vision,Extreme,0.25701114535331726
+scene_002_left-forward,1,Base Description,Easy,0.26227983832359314
+scene_002_left-forward,2,Weather: Rainy,Easy,0.30814966559410095
+scene_002_left-forward,3,Style: Cartoon,Medium,0.24932189285755157
+scene_002_left-forward,4,Material: Lego,Hard,0.24021197855472565
+scene_002_left-forward,5,Env: Mars Red Planet,Extreme,0.23126111924648285
+scene_002_left-forward,6,Abstract: Thermal Vision,Extreme,0.23671561479568481
+scene_008_left-forward,1,Base Description,Easy,0.2926679253578186
+scene_008_left-forward,2,Weather: Rainy,Easy,0.26165303587913513
+scene_008_left-forward,3,Style: Cartoon,Medium,0.2801281809806824
+scene_008_left-forward,4,Material: Lego,Hard,0.2742277979850769
+scene_008_left-forward,5,Env: Mars Red Planet,Extreme,0.2605242431163788
+scene_008_left-forward,6,Abstract: Thermal Vision,Extreme,0.26147785782814026
+scene_013_left-forward,1,Base Description,Easy,0.29079997539520264
+scene_013_left-forward,2,Weather: Rainy,Easy,0.2577820420265198
+scene_013_left-forward,3,Style: Cartoon,Medium,0.2808041572570801
+scene_013_left-forward,4,Material: Lego,Hard,0.28175246715545654
+scene_013_left-forward,5,Env: Mars Red Planet,Extreme,0.2526231110095978
+scene_013_left-forward,6,Abstract: Thermal Vision,Extreme,0.26557812094688416
+scene_024_left-forward,1,Base Description,Easy,0.2728874385356903
+scene_024_left-forward,2,Weather: Rainy,Easy,0.28266170620918274
+scene_024_left-forward,3,Style: Cartoon,Medium,0.27114593982696533
+scene_024_left-forward,4,Material: Lego,Hard,0.2963569164276123
+scene_024_left-forward,5,Env: Mars Red Planet,Extreme,0.2615603804588318
+scene_024_left-forward,6,Abstract: Thermal Vision,Extreme,0.26798567175865173

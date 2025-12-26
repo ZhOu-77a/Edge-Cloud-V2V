@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "name": "Base Description",
+        "difficulty": "Easy",
+        "prompt": "A video of streetview, realistic, high quality, 4k.",
+        "negative_prompt": "low quality, distortion, blurry."
+    },
+    {
+        "id": 2,
+        "name": "Weather: Rainy",
+        "difficulty": "Easy",
+        "prompt": "A video of streetview in heavy rain, wet ground, cinematic lighting.",
+        "negative_prompt": "low quality, distortion, sunny, dry."
+    },
+    {
+        "id": 3,
+        "name": "Style: Cartoon",
+        "difficulty": "Medium",
+        "prompt": "A video of streetview in cartoon style, anime aesthetics, vibrant colors.",
+        "negative_prompt": "photorealistic, low quality, distortion."
+    },
+    {
+        "id": 4,
+        "name": "Material: Lego",
+        "difficulty": "Hard",
+        "prompt": "A video of streetview made of lego blocks, plastic texture, toy world.",
+        "negative_prompt": "realistic, smooth, flesh, organic."
+    },
+    {
+        "id": 5,
+        "name": "Env: Mars Red Planet",
+        "difficulty": "Extreme",
+        "prompt": "A video of streetview on Mars, red dust storm, alien sky, rusty buildings, sci-fi rover view.",
+        "negative_prompt": "blue sky, green trees, grass, ocean, rain."
+    },
+    {
+        "id": 6,
+        "name": "Abstract: Thermal Vision",
+        "difficulty": "Extreme",
+        "prompt": "A video of streetview through a thermal imaging camera, heat map colors (blue, purple, red, yellow), night vision.",
+        "negative_prompt": "realistic colors, daylight, texture, rgb."
+    }
+]

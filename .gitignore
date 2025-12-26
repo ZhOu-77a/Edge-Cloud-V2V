@@ -11,3 +11,6 @@ output_cfg_tests/
 server.log
 experiment_debug.log
 .DS_Store
+output/
+output_experiment_prompt_diff/
+debug_inputs_check_prompt/
