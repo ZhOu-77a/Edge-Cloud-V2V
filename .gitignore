@@ -1,3 +1,4 @@
+
 __pycache__/
 *.pyc
 models/
@@ -14,3 +15,4 @@ experiment_debug.log
 output/
 output_experiment_prompt_diff/
 debug_inputs_check_prompt/
+asset/
