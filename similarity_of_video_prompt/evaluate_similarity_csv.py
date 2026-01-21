@@ -6,12 +6,14 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # === 配置区域 ===
+# 根据evaluate_similarity.py生成的.csv文件直接画图，便于调整画图修改（因为求相似度需要花时间）
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(current_dir)
 
-PROMPT_CONFIG_FILE = os.path.join(parent_dir, "prompts_config.json")
-INPUT_CSV = "source_target_gap.csv"
-OUTPUT_PLOT_DIR = "plots_similarity"
+# PROMPT_CONFIG_FILE = os.path.join(parent_dir, "prompts_config.json")
+PROMPT_CONFIG_FILE = "/home/zhoujh/Edge-Cloud-diffusion/MyCogVideo-v2v/output/15_new5_4_6_CFG7/prompts_config.json"
+INPUT_CSV = "source_target_gap_15.csv"
+OUTPUT_PLOT_DIR = "plots_similarity_15"
 
 if not os.path.exists(OUTPUT_PLOT_DIR):
     os.makedirs(OUTPUT_PLOT_DIR)
@@ -90,7 +92,7 @@ def plot_analysis(df, prompt_order):
     plt.yticks(rotation=0, fontsize=12, fontweight='bold')
     
     plt.tight_layout()
-    save_path = os.path.join(OUTPUT_PLOT_DIR, "heatmap_similarity_centered.png")
+    save_path = os.path.join(OUTPUT_PLOT_DIR, "heatmap_similarity_centered_15.png")
     plt.savefig(save_path)
     print(f" 👉 Heatmap saved to {save_path}")
 

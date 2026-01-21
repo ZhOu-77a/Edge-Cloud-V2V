@@ -1,4 +1,5 @@
 import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 import sys
 import torch
 import requests
@@ -25,16 +26,16 @@ from videox_fun.utils.utils import get_video_to_video_latent, save_videos_grid
 
 TEST_CFG_RATIO = 1 
 TEST_FPS = 6
-TEST_STEPS = 50
-STRENGTH = 0.7
+TEST_STEPS = 30
+STRENGTH = 0.8
 GUIDANCE_SCALE = 6.0
-INPUT_VIDEO = "asset/building.mp4" 
 
-# PROMPT = "A cute cat."
+INPUT_VIDEO = "asset/inpaint_video.mp4" 
+PROMPT = "A cute cat."
+# INPUT_VIDEO = "asset/batch_videos_6s_5/scene_001_left-forward.mp4" 
 # NEGATIVE_PROMPT = "The video is not of a high quality, low resolution, watermark, distortion."
-# PROMPT = "A chubby British Shorthair cat wearing a blue dining bib around its neck"
-PROMPT = "A video of streetview in cartoon style."
-NEGATIVE_PROMPT = "The video is not of a high quality, it has a low resolution. Watermark present in each frame. The background is solid. Strange body and strange trajectory. Distortion. "
+# PROMPT = "A video of streetview in cartoon style."
+NEGATIVE_PROMPT = "The video is not of a high quality, it has a low resolution. Watermark present in each frame. The background is solid. Strange body and strange trajectory. Distortion."
 
 
 SAMPLE_SIZE = [384, 672] 

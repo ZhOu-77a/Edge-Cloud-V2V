@@ -1,0 +1,179 @@
+(causvid) zhoujh@ub-server3:~/Edge-Cloud-diffusion/MyCogVideo-v2v$ python plot_prompt_diff_by_group.py
+
+============================================================
+🚩 被剔除的 Video-Prompt 对 (最终 跨种子均值CLIP Score < 0.25):
+                 video                              prompt_name  clip_score
+scene_094_left-forward Extreme (Var): Mars Planet + muted tones    0.213656
+scene_056_left-forward Extreme (Var): Mars Planet + muted tones    0.218080
+scene_060_left-forward                        Medium: Pixel Art    0.218783
+scene_098_left-forward Extreme (Var): Mars Planet + muted tones    0.223191
+scene_068_left-forward                        Medium: Pixel Art    0.224434
+scene_088_left-forward                        Medium: Cyberpunk    0.229183
+scene_060_left-forward Extreme (Var): Mars Planet + muted tones    0.230544
+scene_100_left-forward Extreme (Var): Mars Planet + muted tones    0.230895
+scene_077_left-forward Extreme (Var): Mars Planet + muted tones    0.231305
+scene_095_left-forward                        Medium: Pixel Art    0.231495
+scene_056_left-forward                        Medium: Pixel Art    0.231989
+scene_095_left-forward Extreme (Var): Mars Planet + muted tones    0.233277
+scene_065_left-forward Extreme (Var): Mars Planet + muted tones    0.238381
+scene_094_left-forward                      Medium: Anime Style    0.239162
+scene_053_left-forward Extreme (Var): Mars Planet + muted tones    0.239254
+scene_057_left-forward Extreme (Var): Mars Planet + muted tones    0.239381
+scene_060_left-forward                      Medium: Anime Style    0.240277
+scene_088_left-forward Extreme (Var): Mars Planet + muted tones    0.241165
+scene_074_left-forward Extreme (Var): Mars Planet + muted tones    0.243085
+scene_053_left-forward                        Medium: Pixel Art    0.243395
+scene_068_left-forward Extreme (Var): Mars Planet + muted tones    0.245316
+scene_100_left-forward                         Medium: Van Gogh    0.245592
+scene_047_left-forward                        Medium: Cyberpunk    0.246441
+scene_066_left-forward Extreme (Var): Mars Planet + muted tones    0.246659
+scene_063_left-forward Extreme (Var): Mars Planet + muted tones    0.247150
+scene_074_left-forward                        Medium: Pixel Art    0.247174
+scene_065_left-forward                          Hard: Ice World    0.247964
+scene_094_left-forward                        Medium: Pixel Art    0.247975
+scene_060_left-forward                          Hard: Ice World    0.249514
+scene_056_left-forward                          Hard: Minecraft    0.249996
+============================================================
+
+📊 分组详细清单 (按初始分数排序):
+  group                  video                              prompt_name  initial_clip_score
+Group_1 scene_100_left-forward                        Medium: Cyberpunk            0.162844
+Group_1 scene_077_left-forward                        Medium: Pixel Art            0.174149
+Group_1 scene_094_left-forward                        Medium: Cyberpunk            0.188065
+Group_1 scene_063_left-forward                        Medium: Pixel Art            0.193791
+Group_1 scene_064_left-forward                        Medium: Pixel Art            0.195350
+Group_1 scene_077_left-forward                      Medium: Anime Style            0.196681
+Group_1 scene_100_left-forward                      Medium: Anime Style            0.197574
+Group_1 scene_040_left-forward                        Medium: Cyberpunk            0.198646
+Group_1 scene_021_left-forward                        Medium: Pixel Art            0.199888
+Group_1 scene_065_left-forward                        Medium: Cyberpunk            0.201289
+Group_1 scene_100_left-forward                          Hard: Ice World            0.202403
+Group_1 scene_057_left-forward                        Medium: Pixel Art            0.202509
+Group_1 scene_044_left-forward                        Medium: Cyberpunk            0.202879
+Group_1 scene_076_left-forward                        Medium: Pixel Art            0.203033
+Group_1 scene_066_left-forward                        Medium: Pixel Art            0.203202
+Group_1 scene_065_left-forward                        Medium: Pixel Art            0.203413
+Group_1 scene_068_left-forward                        Medium: Cyberpunk            0.203595
+Group_1 scene_098_left-forward                        Medium: Pixel Art            0.204856
+Group_1 scene_063_left-forward                      Medium: Anime Style            0.207657
+Group_1 scene_065_left-forward                      Medium: Anime Style            0.207929
+Group_1 scene_074_left-forward                        Medium: Cyberpunk            0.208766
+Group_1 scene_021_left-forward                      Medium: Anime Style            0.209634
+Group_1 scene_021_left-forward Extreme (Var): Mars Planet + muted tones            0.210034
+Group_1 scene_057_left-forward                          Hard: Minecraft            0.211623
+Group_1 scene_068_left-forward                      Medium: Anime Style            0.212510
+Group_1 scene_021_left-forward                          Hard: Ice World            0.214255
+Group_1 scene_060_left-forward                          Hard: Minecraft            0.215109
+Group_1 scene_056_left-forward                          Hard: Ice World            0.215424
+Group_1 scene_021_left-forward                         Medium: Van Gogh            0.215837
+Group_1 scene_076_left-forward Extreme (Var): Mars Planet + muted tones            0.216695
+Group_1 scene_056_left-forward                      Medium: Anime Style            0.217242
+Group_1 scene_044_left-forward                          Hard: Ice World            0.217561
+Group_1 scene_057_left-forward                      Medium: Anime Style            0.217616
+Group_1 scene_040_left-forward Extreme (Var): Mars Planet + muted tones            0.218365
+Group_1 scene_076_left-forward                      Medium: Anime Style            0.218728
+Group_2 scene_057_left-forward                          Hard: Ice World            0.218974
+Group_2 scene_094_left-forward                         Medium: Van Gogh            0.220808
+Group_2 scene_074_left-forward                          Hard: Ice World            0.220862
+Group_2 scene_076_left-forward                          Hard: Ice World            0.220901
+Group_2 scene_066_left-forward                      Medium: Anime Style            0.221380
+Group_2 scene_088_left-forward                        Medium: Pixel Art            0.221839
+Group_2 scene_044_left-forward Extreme (Var): Mars Planet + muted tones            0.222419
+Group_2 scene_021_left-forward                        Medium: Cyberpunk            0.222635
+Group_2 scene_077_left-forward                        Medium: Cyberpunk            0.222991
+Group_2 scene_100_left-forward                        Medium: Pixel Art            0.223050
+Group_2 scene_066_left-forward                        Medium: Cyberpunk            0.223277
+Group_2 scene_056_left-forward                        Medium: Cyberpunk            0.223409
+Group_2 scene_100_left-forward                       Medium: Comic Book            0.223671
+Group_2 scene_077_left-forward                          Hard: Ice World            0.224871
+Group_2 scene_100_left-forward                          Hard: Minecraft            0.225680
+Group_2 scene_063_left-forward                          Hard: Ice World            0.225804
+Group_2 scene_077_left-forward                          Hard: Minecraft            0.225859
+Group_2 scene_076_left-forward                          Hard: Minecraft            0.226031
+Group_2 scene_044_left-forward                      Medium: Anime Style            0.226189
+Group_2 scene_098_left-forward                        Medium: Cyberpunk            0.226832
+Group_2 scene_064_left-forward Extreme (Var): Mars Planet + muted tones            0.227387
+Group_2 scene_044_left-forward                        Medium: Pixel Art            0.227714
+Group_2 scene_057_left-forward                        Medium: Cyberpunk            0.227826
+Group_2 scene_077_left-forward                         Medium: Van Gogh            0.227913
+Group_2 scene_040_left-forward                          Hard: Ice World            0.228011
+Group_2 scene_060_left-forward                        Medium: Cyberpunk            0.228325
+Group_2 scene_066_left-forward                          Hard: Ice World            0.228470
+Group_2 scene_088_left-forward                          Hard: Ice World            0.229323
+Group_2 scene_068_left-forward                          Hard: Ice World            0.229384
+Group_2 scene_074_left-forward                         Medium: Van Gogh            0.230172
+Group_2 scene_056_left-forward                         Medium: Van Gogh            0.230550
+Group_2 scene_094_left-forward                          Hard: Minecraft            0.230562
+Group_2 scene_094_left-forward                          Hard: Ice World            0.230752
+Group_2 scene_063_left-forward                        Medium: Cyberpunk            0.231827
+Group_3 scene_074_left-forward                      Medium: Anime Style            0.232996
+Group_3 scene_068_left-forward                          Hard: Minecraft            0.233684
+Group_3 scene_047_left-forward Extreme (Var): Mars Planet + muted tones            0.234223
+Group_3 scene_044_left-forward                         Medium: Van Gogh            0.235347
+Group_3 scene_063_left-forward                         Medium: Van Gogh            0.235755
+Group_3 scene_066_left-forward                          Hard: Minecraft            0.235902
+Group_3 scene_021_left-forward                          Hard: Minecraft            0.236513
+Group_3 scene_068_left-forward                         Medium: Van Gogh            0.236953
+Group_3 scene_095_left-forward                        Medium: Cyberpunk            0.237142
+Group_3 scene_060_left-forward                         Medium: Van Gogh            0.237333
+Group_3 scene_053_left-forward                        Medium: Cyberpunk            0.237592
+Group_3 scene_040_left-forward                         Medium: Van Gogh            0.237765
+Group_3 scene_065_left-forward                         Medium: Van Gogh            0.237859
+Group_3 scene_066_left-forward                         Medium: Van Gogh            0.237974
+Group_3 scene_074_left-forward                       Medium: Comic Book            0.238633
+Group_3 scene_056_left-forward                       Medium: Comic Book            0.238897
+Group_3 scene_063_left-forward                          Hard: Minecraft            0.239584
+Group_3 scene_040_left-forward                        Medium: Pixel Art            0.240525
+Group_3 scene_040_left-forward                      Medium: Anime Style            0.241273
+Group_3 scene_094_left-forward                       Medium: Comic Book            0.241812
+Group_3 scene_057_left-forward                       Medium: Comic Book            0.241972
+Group_3 scene_074_left-forward                          Hard: Minecraft            0.242730
+Group_3 scene_077_left-forward                       Medium: Comic Book            0.242761
+Group_3 scene_098_left-forward                          Hard: Ice World            0.243550
+Group_3 scene_053_left-forward                         Medium: Van Gogh            0.244358
+Group_3 scene_095_left-forward                      Medium: Anime Style            0.244681
+Group_3 scene_095_left-forward                         Medium: Van Gogh            0.244799
+Group_3 scene_064_left-forward                          Hard: Ice World            0.245511
+Group_3 scene_047_left-forward                        Medium: Pixel Art            0.245566
+Group_3 scene_057_left-forward                         Medium: Van Gogh            0.246052
+Group_3 scene_064_left-forward                      Medium: Anime Style            0.246089
+Group_3 scene_095_left-forward                          Hard: Minecraft            0.246383
+Group_3 scene_088_left-forward                      Medium: Anime Style            0.246842
+Group_3 scene_068_left-forward                       Medium: Comic Book            0.246917
+Group_4 scene_053_left-forward                          Hard: Ice World            0.247329
+Group_4 scene_047_left-forward                          Hard: Ice World            0.247764
+Group_4 scene_064_left-forward                          Hard: Minecraft            0.248224
+Group_4 scene_065_left-forward                       Medium: Comic Book            0.248986
+Group_4 scene_047_left-forward                      Medium: Anime Style            0.249432
+Group_4 scene_047_left-forward                         Medium: Van Gogh            0.250339
+Group_4 scene_044_left-forward                       Medium: Comic Book            0.250443
+Group_4 scene_064_left-forward                         Medium: Van Gogh            0.251047
+Group_4 scene_095_left-forward                          Hard: Ice World            0.251260
+Group_4 scene_076_left-forward                        Medium: Cyberpunk            0.251289
+Group_4 scene_066_left-forward                       Medium: Comic Book            0.252009
+Group_4 scene_065_left-forward                          Hard: Minecraft            0.253870
+Group_4 scene_053_left-forward                      Medium: Anime Style            0.255015
+Group_4 scene_098_left-forward                      Medium: Anime Style            0.255546
+Group_4 scene_088_left-forward                         Medium: Van Gogh            0.256010
+Group_4 scene_098_left-forward                         Medium: Van Gogh            0.256674
+Group_4 scene_063_left-forward                       Medium: Comic Book            0.257766
+Group_4 scene_044_left-forward                          Hard: Minecraft            0.258138
+Group_4 scene_064_left-forward                        Medium: Cyberpunk            0.258410
+Group_4 scene_088_left-forward                       Medium: Comic Book            0.259237
+Group_4 scene_076_left-forward                       Medium: Comic Book            0.262193
+Group_4 scene_040_left-forward                       Medium: Comic Book            0.262507
+Group_4 scene_040_left-forward                          Hard: Minecraft            0.263793
+Group_4 scene_076_left-forward                         Medium: Van Gogh            0.264396
+Group_4 scene_088_left-forward                          Hard: Minecraft            0.265659
+Group_4 scene_060_left-forward                       Medium: Comic Book            0.265978
+Group_4 scene_053_left-forward                          Hard: Minecraft            0.268761
+Group_4 scene_064_left-forward                       Medium: Comic Book            0.269978
+Group_4 scene_021_left-forward                       Medium: Comic Book            0.270037
+Group_4 scene_095_left-forward                       Medium: Comic Book            0.274003
+Group_4 scene_098_left-forward                       Medium: Comic Book            0.276049
+Group_4 scene_053_left-forward                       Medium: Comic Book            0.277233
+Group_4 scene_047_left-forward                          Hard: Minecraft            0.278517
+Group_4 scene_047_left-forward                       Medium: Comic Book            0.284454
+Group_4 scene_098_left-forward                          Hard: Minecraft            0.287969
+
+✨ 处理完成！所有图表已保存在目录: plots_grouped_analysis_group_4

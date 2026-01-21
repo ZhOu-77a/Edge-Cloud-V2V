@@ -16,3 +16,9 @@ output/
 output_experiment_prompt_diff/
 debug_inputs_check_prompt/
 asset/
+*.png
+*.csv
+*.zip
+*.tar.gz
+*.png
+*.mp4

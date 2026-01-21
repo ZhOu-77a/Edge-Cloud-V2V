@@ -1,44 +1,59 @@
 [
     {
-        "id": 1,
-        "name": "Base Description",
-        "difficulty": "Easy",
-        "prompt": "A video of streetview, realistic, high quality, 4k.",
-        "negative_prompt": "low quality, distortion, blurry."
-    },
-    {
-        "id": 2,
-        "name": "Weather: Rainy",
-        "difficulty": "Easy",
-        "prompt": "A video of streetview in heavy rain, wet ground, cinematic lighting.",
-        "negative_prompt": "low quality, distortion, sunny, dry."
-    },
-    {
-        "id": 3,
-        "name": "Style: Cartoon",
+        "id": 11,
+        "name": "Medium: Anime Style",
         "difficulty": "Medium",
-        "prompt": "A video of streetview in cartoon style, anime aesthetics, vibrant colors.",
-        "negative_prompt": "photorealistic, low quality, distortion."
+        "prompt": "A video of streetview in Japanese anime style, Makoto Shinkai aesthetics, vibrant colors, beautiful clouds, 2d animation, high quality, detailed.",
+        "negative_prompt": "photorealistic, 3d, real world, low quality, blurry, distortion."
     },
     {
-        "id": 4,
-        "name": "Material: Lego",
+        "id": 12,
+        "name": "Medium: Comic Book",
+        "difficulty": "Medium",
+        "prompt": "A video of streetview in comic book style, thick black outlines, cel shaded, flat colors, halftone dots, graphic novel, high quality, detailed.",
+        "negative_prompt": "smooth, realistic, photograph, low quality, blurry, distortion."
+    },
+    {
+        "id": 13,
+        "name": "Medium: Van Gogh",
+        "difficulty": "Medium",
+        "prompt": "A video of streetview in Van Gogh Starry Night oil painting style, thick swirling brushstrokes, impasto texture, vivid blue and yellow, high quality, detailed.",
+        "negative_prompt": "photo, smooth, straight lines, low quality, blurry, distortion."
+    },
+    {
+        "id": 17,
+        "name": "Medium: Pixel Art",
+        "difficulty": "Medium",
+        "prompt": "A video of a neighborhood street in 16-bit pixel art style, retro game aesthetic, blocky pixels, limited color palette, SNES graphics, high quality, detailed.",
+        "negative_prompt": "high res, smooth, vector, low quality, blurry, distortion."
+    },
+    {
+        "id": 18,
+        "name": "Medium: Cyberpunk",
+        "difficulty": "Medium",
+        "prompt": "A video of streetview in cyberpunk style, neon signs, holographic ads, wet reflective road, futuristic sci-fi atmosphere, high quality, detailed.",
+        "negative_prompt": "daylight, rustic, old, low quality, blurry, distortion."
+    },
+    {
+        "id": 23,
+        "name": "Hard: Minecraft",
         "difficulty": "Hard",
-        "prompt": "A video of streetview made of lego blocks, plastic texture, toy world.",
-        "negative_prompt": "realistic, smooth, flesh, organic."
+        "prompt": "A video of streetview in Minecraft voxel style, made of cube blocks, low poly, pixelated textures, blocky trees, high quality, detailed.",
+        "negative_prompt": "curves, round, high poly, low quality, blurry, distortion."
+    },
+    
+    {
+        "id": 27,
+        "name": "Hard: Ice World",
+        "difficulty": "Hard",
+        "prompt": "A video of streetview carved completely out of transparent blue ice, frozen world, icicles, slippery reflective surfaces, high quality, detailed.",
+        "negative_prompt": "warm, fire, dirt, low quality, blurry, distortion."
     },
     {
-        "id": 5,
-        "name": "Env: Mars Red Planet",
+        "id": 88,
+        "name": "Extreme (Var): Mars Planet + muted tones",
         "difficulty": "Extreme",
-        "prompt": "A video of streetview on Mars, red dust storm, alien sky, rusty buildings, sci-fi rover view.",
-        "negative_prompt": "blue sky, green trees, grass, ocean, rain."
-    },
-    {
-        "id": 6,
-        "name": "Abstract: Thermal Vision",
-        "difficulty": "Extreme",
-        "prompt": "A video of streetview through a thermal imaging camera, heat map colors (blue, purple, red, yellow), night vision.",
-        "negative_prompt": "realistic colors, daylight, texture, rgb."
+        "prompt": "A video of streetview on Mars red planet, red dust storm, rusty orange sky, alien terrain, sci-fi colony, muted tones, high quality.",
+        "negative_prompt": "blue sky, green trees, earth, low quality, blurry, distortion, watermark."
     }
 ]

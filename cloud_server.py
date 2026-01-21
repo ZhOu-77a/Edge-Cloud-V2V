@@ -1,4 +1,5 @@
 import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 import sys
 import torch
 import base64
@@ -9,8 +10,12 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 
-from videox_fun.models import CogVideoXTransformer3DModel, T5EncoderModel, T5Tokenizer, AutoencoderKLCogVideoX
+from videox_fun.models import CogVideoXTransformer3DModel, T5EncoderModel, T5Tokenizer
 from videox_fun.utils.fp8_optimization import convert_model_weight_to_float8, convert_weight_dtype_wrapper
+from diffusers import (CogVideoXDDIMScheduler,
+                       DPMSolverMultistepScheduler,
+                       EulerAncestralDiscreteScheduler, EulerDiscreteScheduler,
+                       PNDMScheduler)
 from diffusers import DDIMScheduler
 
 current_file_path = os.path.abspath(__file__)
@@ -22,7 +27,7 @@ project_roots = [
 for project_root in project_roots:
     sys.path.insert(0, project_root) if project_root not in sys.path else None
 
-
+sampler_name        = "DDIM_Origin"
 MODEL_NAME = "models/Diffusion_Transformer/CogVideoX-Fun-V1.1-2b-InP" 
 DEVICE = "cuda"
 WEIGHT_DTYPE = torch.bfloat16 
@@ -32,13 +37,23 @@ app = FastAPI()
 
 print(f"☁️ [Cloud] Initializing DEBUG Server on {DEVICE}...")
 
+Chosen_Scheduler = scheduler_dict = {
+    "Euler": EulerDiscreteScheduler,
+    "Euler A": EulerAncestralDiscreteScheduler,
+    "DPM++": DPMSolverMultistepScheduler, 
+    "PNDM": PNDMScheduler,
+    "DDIM_Cog": CogVideoXDDIMScheduler,
+    "DDIM_Origin": DDIMScheduler,
+}[sampler_name]
+
+
 tokenizer = T5Tokenizer.from_pretrained(MODEL_NAME, subfolder="tokenizer")
 text_encoder = T5EncoderModel.from_pretrained(MODEL_NAME, subfolder="text_encoder", torch_dtype=WEIGHT_DTYPE).to(DEVICE)
 transformer = CogVideoXTransformer3DModel.from_pretrained(MODEL_NAME, subfolder="transformer", low_cpu_mem_usage=True, torch_dtype=WEIGHT_DTYPE)
 convert_model_weight_to_float8(transformer, exclude_module_name=[], device=DEVICE)
 convert_weight_dtype_wrapper(transformer, WEIGHT_DTYPE)
 transformer.to(DEVICE)
-scheduler = DDIMScheduler.from_pretrained(MODEL_NAME, subfolder="scheduler")
+scheduler = Chosen_Scheduler.from_pretrained(MODEL_NAME, subfolder="scheduler")
 print("✅ Server Models Loaded!")
 
 def decode_tensor(b64_str, shape):
@@ -58,7 +73,7 @@ class FunRequest(BaseModel):
     shape: list
     steps: int = 50
     strength: float = 0.8
-    guidance_scale: float = 6.0
+    guidance_scale: float = 7.0
     seed: int = 43
     cfg_ratio: float = 1.0 
 

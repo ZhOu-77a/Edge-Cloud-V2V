@@ -17,6 +17,7 @@ import json
 
 # === 1. 核心配置 ===
 os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+
 os.environ["no_proxy"] = "localhost,127.0.0.1,0.0.0.0"
 
 logging.basicConfig(
@@ -52,7 +53,8 @@ CLOUD_URL = f"{BASE_URL}/inference"
 HEALTH_URL = f"{BASE_URL}/health"
 
 # === 实验变量 ===
-INPUT_VIDEO_DIR = "asset/batch_videos_6s_2"
+# INPUT_VIDEO_DIR = "asset/batch_videos_new"
+INPUT_VIDEO_DIR = "/home/zhoujh/Edge-Cloud-diffusion/Dataset/video_2s_22"
 PROMPT_CONFIG_FILE = "prompts_config.json"
 CSV_RESULT_PATH = "experiment_results_prompt_diff.csv" # 结果文件路径
 
@@ -70,7 +72,7 @@ STRENGTH = 0.7
 
 # === 优化变量范围 ===
 FPS_LIST = [2, 3, 4, 5, 6, 7, 8]
-STEPS_LIST = [2, 4, 6, 8, 10, 12, 14, 16, 20, 30]
+STEPS_LIST = [2, 4, 6, 8, 10, 12, 14, 16, 20, 30,40,50]
 CFG_LIST = [0.0, 0.2, 0.3, 0.5, 0.8, 1.0]
 
 DEFAULT_FPS = 8
@@ -78,7 +80,7 @@ DEFAULT_STEPS = 30
 DEFAULT_CFG = 1.0 
 
 # 【修改 1】增加 Trial 次数
-NUM_TRIALS = 3
+NUM_TRIALS = 2
 START_SEED = 43 
 
 OUTPUT_DIR = "output_experiment_prompt_diff"
@@ -217,7 +219,7 @@ def run_single_trial(video_path, video_name, prompt_data, fps, steps, cfg, seed)
         "latents_b64": latents_b64, "shape": list(init_latents.shape),
         "prompt": prompt_text,          # 动态 Prompt
         "negative_prompt": neg_prompt,  # 动态 Negative
-        "strength": STRENGTH, "steps": steps, "guidance_scale": 6.0, 
+        "strength": STRENGTH, "steps": steps, "guidance_scale": 7.0, 
         "seed": seed, "cfg_ratio": cfg
     }
     

@@ -7,9 +7,9 @@ import os
 import colorsys
 
 # === 配置 ===
-CSV_PATH = "experiment_results_prompt_diff.csv"
-OUTPUT_DIR = "plots_prompt_diff_refined"
-
+os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+CSV_PATH = "/home/zhoujh/Edge-Cloud-diffusion/MyCogVideo-v2v/experiment_results_prompt_diff.csv"
+OUTPUT_DIR = "plots_diff_prompt/18"
 # 实验默认值 (用于控制变量)
 DEFAULT_FPS = 8
 DEFAULT_STEPS = 30
