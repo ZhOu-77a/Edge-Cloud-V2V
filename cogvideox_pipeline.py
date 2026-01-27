@@ -114,7 +114,6 @@ latents_curr = latents_noisy
 cfg_stop_idx = int(len(timesteps) * TEST_CFG_RATIO) 
 
 for i, t in enumerate(timesteps):
-    # 下一步中断模块的位置预留
     
     do_cfg = (i < cfg_stop_idx) and (GUIDANCE_SCALE > 1.0)
     

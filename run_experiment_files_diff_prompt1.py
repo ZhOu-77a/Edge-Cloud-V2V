@@ -14,10 +14,9 @@ import gc
 import traceback
 import logging
 import json
-
+# cfg=1,step=30,FPS =8的prompt-video对重复了
 # === 1. 核心配置 ===
 os.environ["CUDA_VISIBLE_DEVICES"] = "2"
-
 os.environ["no_proxy"] = "localhost,127.0.0.1,0.0.0.0"
 
 logging.basicConfig(
@@ -53,10 +52,9 @@ CLOUD_URL = f"{BASE_URL}/inference"
 HEALTH_URL = f"{BASE_URL}/health"
 
 # === 实验变量 ===
-# INPUT_VIDEO_DIR = "asset/batch_videos_new"
-INPUT_VIDEO_DIR = "/home/zhoujh/Edge-Cloud-diffusion/Dataset/video_2s_22_low"
+INPUT_VIDEO_DIR = "/home/zhoujh/Edge-Cloud-diffusion/Dataset/video_2s_1_low"
 PROMPT_CONFIG_FILE = "prompts_config.json"
-CSV_RESULT_PATH = "experiment_results_prompt_diff.csv" # 结果文件路径
+CSV_RESULT_PATH = "experiment_results_prompt_diff.csv" 
 
 MODEL_NAME = "models/Diffusion_Transformer/CogVideoX-Fun-V1.1-2b-InP"
 if not os.path.exists(MODEL_NAME):
@@ -67,20 +65,18 @@ WEIGHT_DTYPE = torch.bfloat16
 
 BANDWIDTH_MBPS = 5.0 
 FIXED_DURATION = 2.0
-# SAMPLE_SIZE = [384, 672] 
-SAMPLE_SIZE     = [272, 480]
+SAMPLE_SIZE = [272, 480]
 STRENGTH = 0.7
 
-# === 优化变量范围 ===
+# 优化变量范围
 FPS_LIST = [2, 3, 4, 5, 6, 7, 8]
-STEPS_LIST = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,30,40,50]
+STEPS_LIST = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 30, 40, 50]
 CFG_LIST = [0.0, 0.2, 0.3, 0.5, 0.8, 1.0]
 
 DEFAULT_FPS = 8
 DEFAULT_STEPS = 30
 DEFAULT_CFG = 1.0 
 
-# 【修改 1】增加 Trial 次数
 NUM_TRIALS = 2
 START_SEED = 43 
 
@@ -88,6 +84,9 @@ OUTPUT_DIR = "output_experiment_prompt_diff"
 DEBUG_INPUT_DIR = "debug_inputs_check_prompt"
 if not os.path.exists(OUTPUT_DIR): os.makedirs(OUTPUT_DIR)
 if not os.path.exists(DEBUG_INPUT_DIR): os.makedirs(DEBUG_INPUT_DIR)
+
+# --- 新增：用于去重的全局集合 ---
+executed_params = set()
 
 vae = None
 
@@ -142,7 +141,6 @@ def load_and_process_video(video_path, target_frames, target_hw):
     for idx in indices:
         img = Image.fromarray(raw_frames[idx])
         w, h = img.size
-        # Center Crop
         target_aspect = tg_w / tg_h
         curr_aspect = w / h
         if curr_aspect > target_aspect:
@@ -161,19 +159,15 @@ def load_and_process_video(video_path, target_frames, target_hw):
     tensor = torch.from_numpy(video_np).unsqueeze(0).permute(0, 2, 1, 3, 4)
     return tensor
 
-# === 辅助函数：即时写入 CSV ===
 def append_to_csv(result_dict, file_path):
     try:
         df = pd.DataFrame([result_dict])
-        # 如果文件不存在，写入 header；如果存在，追加模式 (mode='a') 且不写 header
         need_header = not os.path.exists(file_path)
         df.to_csv(file_path, mode='a', header=need_header, index=False)
     except Exception as e:
         logger.error(f"❌ Failed to append to CSV: {e}")
 
-# === 核心运行逻辑 ===
 def run_single_trial(video_path, video_name, prompt_data, fps, steps, cfg, seed):
-    # 解析 Prompt 数据
     p_id = prompt_data['id']
     p_name = prompt_data['name']
     prompt_text = prompt_data['prompt']
@@ -185,7 +179,6 @@ def run_single_trial(video_path, video_name, prompt_data, fps, steps, cfg, seed)
     gc.collect(); torch.cuda.empty_cache()
     load_vae()
     
-    # 1. 视频处理
     raw_target_frames = int(FIXED_DURATION * fps)
     MAX_FRAMES_SUPPORTED = 49 
     if raw_target_frames > MAX_FRAMES_SUPPORTED: raw_target_frames = MAX_FRAMES_SUPPORTED
@@ -196,30 +189,27 @@ def run_single_trial(video_path, video_name, prompt_data, fps, steps, cfg, seed)
     
     input_video = load_and_process_video(video_path, aligned_frames, SAMPLE_SIZE)
 
-    # 保存参考视频 (Ref)
     ref_video_path = os.path.join(DEBUG_INPUT_DIR, f"ref_{video_name}_fps{fps}.mp4")
-    debug_vid = input_video.squeeze(0).permute(1, 2, 3, 0).cpu().numpy() 
-    debug_vid = (debug_vid * 255).astype(np.uint8)
-    # 如果文件已存在，可以选择不重复写入，但为了稳妥起见还是覆盖
-    iio.imwrite(ref_video_path, debug_vid, fps=fps, codec='libx264')
+    if not os.path.exists(ref_video_path):
+        debug_vid = input_video.squeeze(0).permute(1, 2, 3, 0).cpu().numpy() 
+        debug_vid = (debug_vid * 255).astype(np.uint8)
+        iio.imwrite(ref_video_path, debug_vid, fps=fps, codec='libx264')
 
     input_video = input_video.to(DEVICE).to(WEIGHT_DTYPE)
     input_video = 2.0 * input_video - 1.0
     
     t_start_total = time.time()
     
-    # 2. Encode
     with torch.no_grad():
         init_latents = vae.encode(input_video).latent_dist.sample() * vae.config.scaling_factor
         if hasattr(vae.config, "shift_factor") and vae.config.shift_factor is not None:
-                init_latents = init_latents - vae.config.shift_factor
+            init_latents = init_latents - vae.config.shift_factor
     
-    # 3. Request (使用当前 Prompt)
     latents_b64 = encode_tensor(init_latents)
     payload = {
         "latents_b64": latents_b64, "shape": list(init_latents.shape),
-        "prompt": prompt_text,          # 动态 Prompt
-        "negative_prompt": neg_prompt,  # 动态 Negative
+        "prompt": prompt_text, 
+        "negative_prompt": neg_prompt,
         "strength": STRENGTH, "steps": steps, "guidance_scale": 7.0, 
         "seed": seed, "cfg_ratio": cfg
     }
@@ -231,49 +221,35 @@ def run_single_trial(video_path, video_name, prompt_data, fps, steps, cfg, seed)
     data = resp.json()
     t_down = simulate_latency(len(data["result_b64"]), BANDWIDTH_MBPS)
     
-    # 4. Decode
     latents_out = decode_tensor(data["result_b64"], init_latents.shape)
     with torch.no_grad():
         if hasattr(vae.config, "shift_factor") and vae.config.shift_factor is not None:
-                latents_out = latents_out + vae.config.shift_factor
+            latents_out = latents_out + vae.config.shift_factor
         video_out = vae.decode(latents_out / vae.config.scaling_factor).sample
     
     video_out = (video_out / 2.0 + 0.5).clamp(0, 1)
     total_latency = time.time() - t_start_total
     
-    # 5. Save & Metrics
-    # 按层级目录保存: OUTPUT_DIR / VideoName / PID / fps_steps_cfg_seed.mp4
     video_out_subdir = os.path.join(OUTPUT_DIR, video_name, f"pid{p_id}")
-    if not os.path.exists(video_out_subdir):
-        os.makedirs(video_out_subdir, exist_ok=True)
+    if not os.path.exists(video_out_subdir): os.makedirs(video_out_subdir, exist_ok=True)
     
-    # 文件名包含 seed
     save_filename = f"fps{fps}_steps{steps}_cfg{cfg}_seed{seed}.mp4"
     gen_video_path = os.path.join(video_out_subdir, save_filename)
-    
     save_videos_grid(video_out.to(dtype=torch.float32).cpu(), gen_video_path, fps=fps)
     
-    # Metrics
     clip_text_score, clip_consistency = calc_clip_score(gen_video_path, prompt_text)
     warp_error = calc_warp_error(ref_video_path, gen_video_path)
     
-    # Optional: 清理生成视频 (若硬盘空间不足可开启)
-    # try: os.remove(gen_video_path)
-    # except: pass
-
     return {
-        "video": video_name,
-        "prompt_id": p_id,
-        "prompt_name": p_name,
+        "video": video_name, "prompt_id": p_id, "prompt_name": p_name,
         "prompt_difficulty": prompt_data['difficulty'],
         "fps": fps, "steps": steps, "cfg": cfg, "seed": seed,
-        "latency": total_latency, 
-        "clip_score": clip_text_score,
-        "clip_consistency": clip_consistency,
-        "warp_error": warp_error
+        "latency": total_latency, "clip_score": clip_text_score,
+        "clip_consistency": clip_consistency, "warp_error": warp_error
     }
 
 def run_batch_for_prompt(video_path, video_name, prompt_data, param_name, param_list, fixed_params):
+    global executed_params # 引用全局去重集合
     logger.info(f"   👉 Varying {param_name} for Prompt: {prompt_data['name']}")
     
     for val in param_list:
@@ -282,14 +258,22 @@ def run_batch_for_prompt(video_path, video_name, prompt_data, param_name, param_
             args = fixed_params.copy()
             args[param_name] = val
             
+            # --- 关键修改：检查是否已执行 ---
+            # 唯一组合键：(视频名, PromptID, FPS, Steps, CFG, Seed)
+            param_key = (video_name, prompt_data['id'], args['fps'], args['steps'], args['cfg'], seed)
+            
+            if param_key in executed_params:
+                logger.info(f"   ⏭️ Skipping duplicated: {param_key}")
+                continue
+            
             try:
                 res = run_single_trial(
                     video_path, video_name, prompt_data,
                     args['fps'], args['steps'], args['cfg'], seed
                 )
                 if res:
-                    # 即时写入 CSV
                     append_to_csv(res, CSV_RESULT_PATH)
+                    executed_params.add(param_key) # 运行成功后标记
                     logger.info(f"   💾 Result saved for {param_name}={val} (Seed {seed})")
             except Exception as e:
                 logger.error(f"❌ Failed: {prompt_data['name']} | {param_name}={val} | Seed {seed}")
@@ -308,37 +292,27 @@ def main():
             log_file = open(SERVER_LOG_FILE, "w")
             server_process = subprocess.Popen(
                 [sys.executable, SERVER_SCRIPT],
-                env=server_env,
-                stdout=log_file,
-                stderr=log_file
+                env=server_env, stdout=log_file, stderr=log_file
             )
             server_started_by_me = True
             logger.info(f"   Server started with PID {server_process.pid}")
         except Exception as e:
-            logger.error(f"Failed to start server: {e}")
-            return
+            logger.error(f"Failed to start server: {e}"); return
 
     try:
         if not wait_for_server(): 
-            logger.error("❌ Server start failed or not reachable.")
-            if server_started_by_me and server_process:
-                server_process.terminate()
-            return
+            logger.error("❌ Server start failed."); return
         
-        # 1. 准备 CSV
         if os.path.exists(CSV_RESULT_PATH):
             os.remove(CSV_RESULT_PATH)
             logger.info(f"🗑️ Cleaned up old results CSV: {CSV_RESULT_PATH}")
 
-        # 2. 读取 Prompts
         if not os.path.exists(PROMPT_CONFIG_FILE):
-            logger.error(f"❌ Config file not found: {PROMPT_CONFIG_FILE}")
-            return
+            logger.error(f"❌ Config file not found: {PROMPT_CONFIG_FILE}"); return
+        
         with open(PROMPT_CONFIG_FILE, 'r') as f:
             prompts_data = json.load(f)
-        logger.info(f"📖 Loaded {len(prompts_data)} prompts.")
-
-        # 3. 读取 Videos
+        
         video_files = []
         if os.path.exists(INPUT_VIDEO_DIR):
             for f in os.listdir(INPUT_VIDEO_DIR):
@@ -346,34 +320,25 @@ def main():
         
         fixed = {'fps': DEFAULT_FPS, 'steps': DEFAULT_STEPS, 'cfg': DEFAULT_CFG}
 
-        # === 实验循环 ===
         for video_path in video_files:
             video_name = os.path.splitext(os.path.basename(video_path))[0]
             logger.info(f"\n🎬 Processing Video: {video_name}")
             
             for prompt_item in prompts_data:
-                logger.info(f" 📝 Using Prompt ID {prompt_item['id']}: {prompt_item['name']}")
-                
-                # 实验 1: 变化 Steps
+                # 实验 1-3 内部会通过 executed_params 自动跳过重复组合
                 run_batch_for_prompt(video_path, video_name, prompt_item, 'steps', STEPS_LIST, fixed)
-                
-                # 实验 2: 变化 CFG
                 run_batch_for_prompt(video_path, video_name, prompt_item, 'cfg', CFG_LIST, fixed)
-                
-                # 实验 3: 变化 FPS
                 run_batch_for_prompt(video_path, video_name, prompt_item, 'fps', FPS_LIST, fixed)
 
         logger.info(f"\n✅ All experiments finished. Data in {CSV_RESULT_PATH}")
 
     except KeyboardInterrupt:
-        logger.warning("Experiment interrupted by user.")
+        logger.warning("Experiment interrupted.")
     finally:
         if server_started_by_me and server_process:
-            logger.info("🛑 Stopping background server...")
             server_process.terminate()
             server_process.wait()
-            try: log_file.close()
-            except: pass
+            log_file.close()
 
 if __name__ == "__main__":
     main()

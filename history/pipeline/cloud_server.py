@@ -1,5 +1,7 @@
+# CogvideoX_cloud without interruption.
+
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 import sys
 import torch
 import base64

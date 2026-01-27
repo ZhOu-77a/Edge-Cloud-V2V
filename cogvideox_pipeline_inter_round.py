@@ -25,7 +25,7 @@ from videox_fun.utils.fp8_optimization import convert_model_weight_to_float8, co
 from videox_fun.utils.utils import get_video_to_video_latent, save_videos_grid
 
 # [核心修改] 导入自定义调度器
-from Int_DDIMScheduler import Int_DDIMScheduler
+from utils1.Int_DDIMScheduler import Int_DDIMScheduler
 
 # 固定基础参数
 MODEL_NAME      = "models/Diffusion_Transformer/CogVideoX-Fun-V1.1-2b-InP" 
@@ -37,7 +37,7 @@ GUIDANCE_SCALE  = 6.0
 # INPUT_VIDEO     = "asset/inpaint_video.mp4" 
 # PROMPT          = "A cute cat."
 # NEGATIVE_PROMPT = "The video is not of a high quality, it has a low resolution. Watermark present in each frame. The background is solid. Strange body and strange trajectory. Distortion. "
-INPUT_VIDEO     = "/home/zhoujh/Edge-Cloud-diffusion/Dataset/video_2s_1_low/scene_021_left-forward.mp4" 
+INPUT_VIDEO     = "../Dataset/video_2s_1_low/scene_021_left-forward.mp4" 
 PROMPT          = "A video of streetview in Japanese anime style, Makoto Shinkai aesthetics, vibrant colors, beautiful clouds, 2d animation, high quality, detailed."
 NEGATIVE_PROMPT = "photorealistic, 3d, real world, low quality, blurry, distortion."
 SAMPLE_SIZE     = [272, 480] # [480, 270] 

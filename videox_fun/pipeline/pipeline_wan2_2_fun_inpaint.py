@@ -68,7 +68,7 @@ def retrieve_timesteps(
         `Tuple[torch.Tensor, int]`: A tuple where the first element is the timestep schedule from the scheduler and the
         second element is the number of inference steps.
     """
-    if timesteps is not None and sigmas is not None:
+    if timesteps is not None and sigmas is not None: # timesteps = None, Sigmas = None
         raise ValueError("Only one of `timesteps` or `sigmas` can be passed. Please choose one to set custom values")
     if timesteps is not None:
         accepts_timesteps = "timesteps" in set(inspect.signature(scheduler.set_timesteps).parameters.keys())
@@ -90,7 +90,7 @@ def retrieve_timesteps(
         scheduler.set_timesteps(sigmas=sigmas, device=device, **kwargs)
         timesteps = scheduler.timesteps
         num_inference_steps = len(timesteps)
-    else:
+    else:  # flow只用了这个👇
         scheduler.set_timesteps(num_inference_steps, device=device, **kwargs)
         timesteps = scheduler.timesteps
     return timesteps, num_inference_steps
@@ -553,7 +553,7 @@ class Wan2_2FunInpaintPipeline(DiffusionPipeline):
             max_sequence_length=max_sequence_length,
             device=device,
         )
-        if do_classifier_free_guidance:
+        if do_classifier_free_guidance: # 下面的是列表相加，所以其实是拼接操作
             in_prompt_embeds = negative_prompt_embeds + prompt_embeds
         else:
             in_prompt_embeds = prompt_embeds
