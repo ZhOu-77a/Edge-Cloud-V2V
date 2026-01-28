@@ -1,5 +1,5 @@
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "3"
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 import sys
 import torch
 import requests
@@ -25,6 +25,7 @@ MODEL_NAME = "models/Diffusion_Transformer/CogVideoX-Fun-V1.1-2b-InP"
 DEVICE = "cuda"
 WEIGHT_DTYPE = torch.bfloat16
 CLOUD_URL = "http://127.0.0.1:12346/inference"
+# CLOUD_URL = "http://172.16.33.142:12346/inference"
 
 INPUT_VIDEO = "asset/inpaint_video.mp4" 
 PROMPT = "A cute cat."
@@ -106,7 +107,7 @@ def main():
                  latents_to_decode = latents_to_decode + vae.config.shift_factor
             video_out = vae.decode(latents_to_decode / vae.config.scaling_factor).sample
 
-        output_dir = "output_split"
+        output_dir = "output_Edge_cloud_"
         if not os.path.exists(output_dir): os.makedirs(output_dir)
         save_filename = os.path.join(output_dir, f"cog_edge_dynamic_signal.mp4")
         
